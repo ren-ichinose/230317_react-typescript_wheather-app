@@ -23,7 +23,7 @@ function App() {
   })
   const getWeather = (e: any) => {
     e.preventDefault();
-    fetch(`https://api.weatherapi.com/v1/current.json?key=${process.env.REACT_APP_API_KEY}&q=London&aqi=no`)
+    fetch(`https://api.weatherapi.com/v1/current.json?key=${process.env.REACT_APP_API_KEY}&q=${city}&aqi=no`)
       .then(res => res.json())
       .then(data => { 
         setResult({
@@ -31,7 +31,7 @@ function App() {
           cityName: data.location.name,
           temperature: data.current.temp_c,
           conditionText: data.current.condition.text,
-          icon: data.current.icon,
+          icon: data.current.condition.icon,
         })
     })
   }
