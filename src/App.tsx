@@ -33,12 +33,15 @@ function App() {
           conditionText: data.current.condition.text,
           icon: data.current.condition.icon,
         })
-    })
+        setCity("");
+      })
+      .catch(() => alert('入力内容を確認してください'))
   }
   return (  
     <div className="App">
       <Title />
       <Form 
+        city = { city }
         setCity = { setCity }
         getWeather = { getWeather }/>
       <Results result = { result } />
