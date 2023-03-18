@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import Form from "./components/Form";
+import Loading from "./components/Loading";
 import Results from "./components/Results";
 import Title from "./components/Title";
 
@@ -21,8 +22,10 @@ function App() {
     conditionText: "",
     icon: "",
   })
+  const [ isLoading, setIsLoading ] = useState<boolean>(false);
   const getWeather = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     fetch(`https://api.weatherapi.com/v1/current.json?key=${process.env.REACT_APP_API_KEY}&q=${city}&aqi=no`)
       .then(res => res.json())
       .then(data => { 
@@ -33,6 +36,7 @@ function App() {
           conditionText: data.current.condition.text,
           icon: data.current.condition.icon,
         })
+        setIsLoading(false);
         setCity("");
       })
       .catch(() => alert('入力内容を確認してください'))
@@ -44,7 +48,7 @@ function App() {
         city = { city }
         setCity = { setCity }
         getWeather = { getWeather }/>
-      <Results result = { result } />
+      { isLoading ? <Loading /> : <Results result = { result } /> }
     </div>
   );
 }
